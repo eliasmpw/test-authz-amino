@@ -1,5 +1,3 @@
-import { createRewardsAminoConverters } from "@archwayhq/arch3.js";
-
 import { createWasmAminoConverters } from "@cosmjs/cosmwasm-stargate";
 import { AminoTypes, createDefaultAminoConverters } from "@cosmjs/stargate";
 
@@ -14,7 +12,6 @@ import { Timestamp } from "cosmjs-types/google/protobuf/timestamp.js";
 export const aminoTypes = new AminoTypes({
   ...createDefaultAminoConverters(),
   ...createWasmAminoConverters(),
-  ...createRewardsAminoConverters(),
   ...{
     "/cosmos.authz.v1beta1.MsgGrant": {
       aminoType: "cosmos-sdk/MsgGrant",

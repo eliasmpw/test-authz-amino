@@ -1,6 +1,7 @@
 import { SigningArchwayClient } from "@archwayhq/arch3.js";
 
 import { Secp256k1HdWallet } from "@cosmjs/amino";
+import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import { DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 
 import { MsgGrant } from "cosmjs-types/cosmos/authz/v1beta1/tx.js";
@@ -17,9 +18,8 @@ export const authzStake = async ({
   rpcEndpoint,
   granteeAddress,
   tokenMinDenom,
+  prefix
 }) => {
-  const prefix = "archway";
-
   const wallet = await (useAmino
     ? Secp256k1HdWallet
     : DirectSecp256k1HdWallet
@@ -28,7 +28,7 @@ export const authzStake = async ({
   });
 
   const [{ address: walletAddress }] = await wallet.getAccounts();
-  const signingClient = await SigningArchwayClient.connectWithSigner(
+  const signingClient = await SigningCosmWasmClient.connectWithSigner(
     rpcEndpoint,
     wallet,
     { aminoTypes: aminoTypes }
@@ -58,7 +58,7 @@ export const authzStake = async ({
       },
     ],
     {
-      amount: [{ denom: tokenMinDenom, amount: "30000000000000000" }],
+      amount: [{ denom: tokenMinDenom, amount: "300000" }],
       gas: "150000",
     },
     "Testing Authz StakeAuthorization Direct"
